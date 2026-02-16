@@ -133,7 +133,7 @@ const Contact = () => {
               </span>
             </a>
             <a
-              href="https://rifatraditya.me/"
+              href="https://links.rifatraditya.me/"
               target="_blank"
               rel="noopener noreferrer"
               className="border border-primary/30 px-5 py-5 text-lg md:text-2xl font-bold uppercase tracking-tight hover:border-primary hover:bg-primary/5 transition-colors"

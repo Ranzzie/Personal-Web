@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { MenuIcon } from "@/components/ui/menu-icon";
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -72,10 +72,11 @@ const Navigation = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-foreground"
+            className="md:hidden text-foreground relative z-50"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle Menu"
           >
-            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            <MenuIcon size={24} isOpen={isMobileMenuOpen} />
           </button>
         </div>
 

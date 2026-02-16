@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { AtSignIcon } from "./icons/AtSignIcon";
 import { ArrowRightIcon } from "./icons/ArrowRightIcon";
 import { GithubIcon } from "./icons/GithubIcon";
@@ -5,6 +6,58 @@ import { InstagramIcon } from "./icons/InstagramIcon";
 import { LinkIcon } from "./icons/LinkIcon";
 
 const Hero = () => {
+  const [displayText, setDisplayText] = useState("");
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [canStart, setCanStart] = useState(false);
+
+  const phrases = [
+    "NETWORK ENGINEER & SYSTEM ADMINISTRATOR",
+    "cable managing",
+    "deploying changes",
+    "ngombe kopi",
+    "turu"
+  ];
+
+  useEffect(() => {
+    const timer = setTimeout(() => setCanStart(true), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!canStart) return;
+
+    const currentPhrase = phrases[phraseIndex];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (!isDeleting && displayText === currentPhrase) {
+      // Pause when the phrase is complete
+      timeout = setTimeout(() => setIsDeleting(true), 1750);
+    } else if (isDeleting && displayText === "") {
+      // Move to next phrase after deletion
+      setIsDeleting(false);
+      setPhraseIndex((prev) => (prev + 1) % phrases.length);
+      timeout = setTimeout(() => { }, 100); // Tiny pause before next phrase starts
+    } else {
+      // Typing or Deleting
+      timeout = setTimeout(() => {
+        setDisplayText(currentPhrase.substring(0, displayText.length + (isDeleting ? -1 : 1)));
+      }, isDeleting ? 30 : 60);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [displayText, isDeleting, phraseIndex, canStart]);
+
+  const isComplete = !isDeleting && displayText === phrases[phraseIndex];
+
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const quickLinks = [
     {
       label: "GitHub",
@@ -41,10 +94,11 @@ const Hero = () => {
       <div className="container mx-auto max-w-5xl text-center relative z-10">
 
 
-        <div className="mb-10 mx-auto w-fit px-5 py-2 border border-white/5 rounded-full flex items-center gap-3 bg-zinc-900/80 backdrop-blur-sm">
+        <div className="mb-10 mx-auto w-fit px-5 py-2 border border-white/5 rounded-full flex items-center gap-3 bg-zinc-900/80 backdrop-blur-sm min-h-[42px]">
           <span className="w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.5)]"></span>
-          <span className="text-xs font-medium uppercase tracking-widest text-white/90 font-mono">
-            NETWORK ENGINEER & SYSTEM ADMINISTRATOR
+          <span className="text-xs font-medium tracking-widest text-white/90 font-mono flex items-center">
+            {displayText}
+            <span className={`ml-1 w-1.5 h-3.5 bg-white ${isComplete ? "terminal-blink" : ""}`} />
           </span>
         </div>
 
@@ -69,6 +123,7 @@ const Hero = () => {
         <div className="flex flex-wrap justify-center gap-4 mb-20">
           <a
             href="#projects"
+            onClick={(e) => scrollToSection(e, "#projects")}
             className="group relative inline-flex items-center gap-2 border border-primary bg-primary px-8 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-primary-foreground transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(255,51,102,0.6)]"
           >
             View My Work
@@ -76,6 +131,7 @@ const Hero = () => {
           </a>
           <a
             href="#contact"
+            onClick={(e) => scrollToSection(e, "#contact")}
             className="group relative inline-flex items-center gap-2 border border-white/10 bg-white/5 px-8 py-3 text-[10px] font-medium uppercase tracking-[0.2em] text-white transition-all duration-500 hover:-translate-y-0.5 hover:border-primary/50 hover:bg-primary/10 hover:shadow-[0_0_20px_rgba(255,51,102,0.2)]"
           >
             Get In Touch
