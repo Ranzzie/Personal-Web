@@ -88,7 +88,7 @@ const Contact = () => {
 
         <div className="flex flex-col gap-4 items-center">
           <a
-            href="mailto:rifatradityaa@gmail.com"
+            href="mailto:mail@rifatraditya.me"
             className="w-full border border-primary/40 px-5 py-5 md:py-6 text-lg md:text-3xl font-bold uppercase tracking-tight hover:border-primary hover:bg-primary/5 transition-colors"
             onMouseEnter={() => emailIconRef.current?.startAnimation()}
             onMouseLeave={() => emailIconRef.current?.stopAnimation()}
@@ -97,7 +97,7 @@ const Contact = () => {
           >
             <span className="inline-flex items-center gap-3 md:gap-4">
               <AtSignIcon ref={emailIconRef} className="text-primary" size={18} />
-              <span>rifatradityaa@gmail.com</span>
+              <span>mail@rifatraditya.me</span>
             </span>
           </a>
 

@@ -71,7 +71,7 @@ const Hero = () => {
     },
     {
       label: "Email Me?",
-      href: "mailto:rifatradityaa@gmail.com",
+      href: "mailto:mail@rifatraditya.me",
       icon: AtSignIcon,
     },
     {
